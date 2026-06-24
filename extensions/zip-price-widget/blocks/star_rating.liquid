@@ -1,0 +1,43 @@
+<div style="margin-top:20px;">
+  <label><strong>Enter ZIP Code:</strong></label><br>
+
+  <input
+    type="text"
+    id="zip-code"
+    placeholder="Enter ZIP code"
+    style="padding:8px; width:200px; margin-top:10px;"
+  >
+
+  <button
+    onclick="checkPrice()"
+    style="padding:8px 12px; margin-left:10px;"
+  >
+    Check Price
+  </button>
+
+  <p id="price-result" style="margin-top:15px; font-weight:bold;">
+  </p>
+</div>
+
+<script>
+async function checkPrice() {
+    const zip = document.getElementById("zip-code").value;
+
+    const response = await fetch(
+        "http://127.0.0.1:8000/price?zipcode=" + zip
+    );
+
+    const data = await response.json();
+
+    document.getElementById("price-result").innerText =
+        "Price: $" + data.price;
+}
+</script>
+
+{% schema %}
+{
+  "name": "ZIP Price Widget",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}
